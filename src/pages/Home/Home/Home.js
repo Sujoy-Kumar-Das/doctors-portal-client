@@ -3,6 +3,7 @@ import Banner from "../banner/Banner";
 import UseTitle from "../../../hookes/UseTitle";
 import InfoCards from "../InfoCards/InfoCards";
 import Services from "../service/Services";
+import Appointment from "../appoitment/Appointment";
 
 
 
@@ -13,6 +14,7 @@ const Home = () => {
       <Banner></Banner>
       <InfoCards></InfoCards>
       <Services></Services>
+      <Appointment></Appointment>
     </div>
   );
 };
