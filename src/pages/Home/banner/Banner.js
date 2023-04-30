@@ -6,17 +6,14 @@ const Banner = () => {
       className="min-h-[638px] flex align-middle justify-between"
       style={{
         backgroundImage: ` linear-gradient(45deg, rgb(255, 255, 255), #cffff5b7),url(${chairImg}) `,
-        
         backgroundPosition: "center",
         backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        
-        // position:'relative'
+        backgroundRepeat: "no-repeat"
       }}
     >
       <div className="hero  my-2 ">
         <div className="hero-content flex-col lg:flex-row-reverse">
-          <img src={chairImg} className="w-1/2 rounded-lg shadow-2xl" alt="" />
+          <img src={chairImg} className="w-full lg:w-1/2 rounded-lg shadow-2xl" alt="" />
           <div>
             <h1 className="text-5xl font-bold">
               Your New Smile Starts <br /> Here
