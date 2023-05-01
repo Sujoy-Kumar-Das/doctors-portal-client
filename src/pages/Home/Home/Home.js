@@ -4,6 +4,8 @@ import UseTitle from "../../../hookes/UseTitle";
 import InfoCards from "../InfoCards/InfoCards";
 import Services from "../service/Services";
 import Appointment from "../appoitment/Appointment";
+import Reviews from "../reviews/Reviews";
+import ContactUs from "../contactUS/ContactUs";
 
 
 
@@ -15,6 +17,8 @@ const Home = () => {
       <InfoCards></InfoCards>
       <Services></Services>
       <Appointment></Appointment>
+      <Reviews></Reviews>
+      <ContactUs></ContactUs>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const Appointment = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="hero-content py-0 flex-row">
+        <div className="hero-content py-6 lg:py-0 flex-row">
           <img
             src={doctor}
             className="hidden lg:block w-1/2 rounded-lg -mt-24 "
