@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import Social from "../socialLogin/Social";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthProvider } from "../../../contexts/authContext/AuthContextProvider";
 
 const Singup = () => {
+  const {createUser,updateUser} = useContext(AuthProvider);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const handleSingup = (data, event) => {
-    event.target.reset();
-    console.log(data);
+    
+    console.log(data.name);
+    const userInfo = {displayName:data.name}
+    createUser(data.email,data.password)
+    .then(result=>{
+      const user = result.user;
+      console.log(user)
+      updateUser(userInfo)
+      .then(()=>{})
+      .catch(error=>console.log(error))
+      event.target.reset();
+    })
+    .catch(error=>console.log(error))
   };
   return (
     <div className="h-[600px] flex justify-center items-center">

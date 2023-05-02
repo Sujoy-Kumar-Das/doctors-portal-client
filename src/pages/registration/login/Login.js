@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Social from "../socialLogin/Social";
+import { AuthProvider } from "../../../contexts/authContext/AuthContextProvider";
 
 const Login = () => {
   const { register,formState: { errors }, handleSubmit } = useForm();
+  const {loginUser} = useContext(AuthProvider)
+  
   const handleLogin = (data,event) =>{
-    event.target.reset();
+    loginUser(data.email,data.password)
+    .then(result=>{
+      const user = result.user;
+      console.log(user)
+      event.target.reset();
+    })
+    .catch(error=>console.log(error))
+    
     console.log(data)
   }
   return (
@@ -45,6 +55,12 @@ const Login = () => {
             value="Login"
           />
         </form>
+        <label className="label">
+          <span className="label-text">
+            Forgot password?{" "}
+            <Link to={"/reset-password"} className=" btn-link" >reset now</Link>
+          </span>
+        </label>
         <label className="label">
           <span className="label-text">
             New to Doctors Portal?{" "}
