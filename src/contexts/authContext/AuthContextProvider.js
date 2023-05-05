@@ -50,6 +50,7 @@ const AuthContextProvider = ({children}) => {
         resetPassword,
         logOut,
         user,
+        loader
     }
     return (
         <AuthProvider.Provider value={authInfo}>

@@ -1,19 +1,50 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthProvider } from "../../contexts/authContext/AuthContextProvider";
+import { toast } from "react-hot-toast";
 
-const AppoinmentModal = ({ bookinInfo, selected ,setBookingInfo}) => {
-  const { name, slots } = bookinInfo;
+const AppoinmentModal = ({ bookinInfo, selected, setBookingInfo,refetch }) => {
+  const { user } = useContext(AuthProvider);
+  const { name: treatmentName, slots } = bookinInfo;
+  
   const date = format(selected, "PP");
-  const handleAppoitment = event =>{
+  const handleAppoitment = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
-    const email= form.email.value;
-    const appoinmentDate = date;
+    const email = form.email.value;
+    const appointmentDate = date;
     const phone = form.phone.value;
-    setBookingInfo(null)
-    console.log(name,email,appoinmentDate,phone)
-  }
+    const slot = form.slot.value;
+    const booking = {
+      treatment: treatmentName,
+      patient: name,
+      email,
+      appointmentDate,
+      phone: phone,
+      slot
+    };
+   
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast.success(data.message);
+          refetch()
+          setBookingInfo(null);
+
+        } else {
+          toast.error(data.message);
+        }
+      });
+  };
   return (
     <>
       <input type="checkbox" id="appoinment-modal" className="modal-toggle" />
@@ -25,8 +56,11 @@ const AppoinmentModal = ({ bookinInfo, selected ,setBookingInfo}) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold">{name}</h3>
-          <form onSubmit={handleAppoitment} className=" grid grid-cols-1 gap-3 my-5">
+          <h3 className="text-lg font-bold">{treatmentName}</h3>
+          <form
+            onSubmit={handleAppoitment}
+            className=" grid grid-cols-1 gap-3 my-5"
+          >
             <input
               type="text"
               value={date}
@@ -41,19 +75,22 @@ const AppoinmentModal = ({ bookinInfo, selected ,setBookingInfo}) => {
             <input
               type="text"
               name="name"
-              placeholder="Name"
+              defaultValue={user?.displayName}
+              disabled
               className="input input-bordered w-full"
             />
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              defaultValue={user?.email}
+              disabled
               className="input input-bordered w-full"
             />
             <input
               type="text"
               placeholder="Phone"
               name="phone"
+              required
               className="input input-bordered w-full"
             />
             <input

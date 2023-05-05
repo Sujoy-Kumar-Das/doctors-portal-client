@@ -5,6 +5,9 @@ import AppoinmentSection from "../pages/Appoinment/Appoinment/AppoinmentSection"
 import Login from "../pages/registration/login/Login";
 import Singup from "../pages/registration/singup/Singup";
 import ResetPass from "../pages/registration/resetPass/ResetPass";
+import DashBoardLayout from "../Layouts/DashBoardLayout";
+import PrivetRouer from "./PrivetRouer";
+import AppoinmentDashBoard from "../pages/AppoinmentDasboard.js/AppoinmentDashBoard";
 
 
 export const router = createBrowserRouter([
@@ -18,6 +21,16 @@ export const router = createBrowserRouter([
             {path:'/singup',element:<Singup></Singup>},
             {path:"/reset-password",element:<ResetPass></ResetPass>},
             {path:'/appoinment',element:<AppoinmentSection></AppoinmentSection>}
+        ]
+    },
+    {
+        path:'/dashboardLayout',
+        element:<PrivetRouer><DashBoardLayout></DashBoardLayout></PrivetRouer>,
+        children:[
+            {
+                path:"/dashboardLayout",
+                element:<AppoinmentDashBoard></AppoinmentDashBoard>
+            }
         ]
     }
 ])

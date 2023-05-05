@@ -1,18 +1,21 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Social from "../socialLogin/Social";
 import { AuthProvider } from "../../../contexts/authContext/AuthContextProvider";
 
 const Login = () => {
   const { register,formState: { errors }, handleSubmit } = useForm();
   const {loginUser} = useContext(AuthProvider)
-  
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate()
   const handleLogin = (data,event) =>{
     loginUser(data.email,data.password)
     .then(result=>{
       const user = result.user;
       console.log(user)
+      navigate(from,{replace:true})
       event.target.reset();
     })
     .catch(error=>console.log(error))
