@@ -8,13 +8,17 @@ const AppoinmentDashBoard = () => {
     queryKey: ["booking", user],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/booking?email=${user.email}`
+      `http://localhost:5000/booking?email=${user.email}`,
+      {
+        headers:{
+          authorization:`Bearer ${localStorage.getItem("Acess_Token")}`
+        }
+      }
       );
       const data = res.json();
       return data;
     },
   });
-  console.log(appoinments)
   return (
     <div>
       <h1 className=" text-xl font-bold mb-3">My Appointment</h1>
@@ -29,9 +33,9 @@ const AppoinmentDashBoard = () => {
             </tr>
           </thead>
           <tbody>
-            {appoinments?.booking.map((appoinment, i) => (
+            {appoinments?.booking?.map((appoinment, i) => (
               <tr key={appoinment._id}>
-                <th>{i+1}</th>
+                <th>{i + 1}</th>
                 <td>{appoinment.patient}</td>
                 <td>{appoinment.treatment}</td>
                 <td>{appoinment.slot}</td>

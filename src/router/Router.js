@@ -8,6 +8,7 @@ import ResetPass from "../pages/registration/resetPass/ResetPass";
 import DashBoardLayout from "../Layouts/DashBoardLayout";
 import PrivetRouer from "./PrivetRouer";
 import AppoinmentDashBoard from "../pages/AppoinmentDasboard.js/AppoinmentDashBoard";
+import AllUsers from "../pages/Alluser/AllUsers";
 
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
             {
                 path:"/dashboardLayout",
                 element:<AppoinmentDashBoard></AppoinmentDashBoard>
+            },
+            {
+                path:"/dashboardLayout/allusers",
+                element:<AllUsers></AllUsers>
             }
         ]
     }

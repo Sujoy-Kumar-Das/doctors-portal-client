@@ -1,21 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Social from "../socialLogin/Social";
 import { AuthProvider } from "../../../contexts/authContext/AuthContextProvider";
+import UseJWT from "../../../hookes/UseJWT";
 
 const Login = () => {
   const { register,formState: { errors }, handleSubmit } = useForm();
   const {loginUser} = useContext(AuthProvider)
+  const [currentUserEmail,setCurrentUserEmail] = useState('')
+  const [token] = UseJWT(currentUserEmail)
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate()
+  if(token){
+    navigate(from,{replace:true})
+  }
   const handleLogin = (data,event) =>{
     loginUser(data.email,data.password)
     .then(result=>{
       const user = result.user;
       console.log(user)
-      navigate(from,{replace:true})
+      
+      setCurrentUserEmail(data.email)
       event.target.reset();
     })
     .catch(error=>console.log(error))
