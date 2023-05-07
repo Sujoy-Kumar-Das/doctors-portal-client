@@ -3,10 +3,10 @@ import React, { useContext } from "react";
 import { AuthProvider } from "../../contexts/authContext/AuthContextProvider";
 import { toast } from "react-hot-toast";
 
-const AppoinmentModal = ({ bookinInfo, selected, setBookingInfo,refetch }) => {
+const AppoinmentModal = ({ bookinInfo, selected, setBookingInfo, refetch }) => {
   const { user } = useContext(AuthProvider);
   const { name: treatmentName, slots } = bookinInfo;
-  
+
   const date = format(selected, "PP");
   const handleAppoitment = (event) => {
     event.preventDefault();
@@ -22,9 +22,8 @@ const AppoinmentModal = ({ bookinInfo, selected, setBookingInfo,refetch }) => {
       email,
       appointmentDate,
       phone: phone,
-      slot
+      slot,
     };
-   
 
     fetch("http://localhost:5000/bookings", {
       method: "POST",
@@ -37,9 +36,8 @@ const AppoinmentModal = ({ bookinInfo, selected, setBookingInfo,refetch }) => {
       .then((data) => {
         if (data.success) {
           toast.success(data.message);
-          refetch()
+          refetch();
           setBookingInfo(null);
-
         } else {
           toast.error(data.message);
         }
@@ -68,6 +66,7 @@ const AppoinmentModal = ({ bookinInfo, selected, setBookingInfo,refetch }) => {
               className="input input-bordered w-full"
             />
             <select name="slot" className="select w-full bordered">
+              
               {slots?.map((slot, index) => (
                 <option key={index}>{slot}</option>
               ))}

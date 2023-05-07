@@ -20,7 +20,7 @@ const AllUsers = () => {
       return data;
     },
   });
-  const handleAdmin = (id) => {
+  const handleAdmin = (id,name) => {
     fetch(`http://localhost:5000/user/admin/${id}`, {
       method: "PUT",
       headers: {
@@ -30,7 +30,7 @@ const AllUsers = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          toast.success(data.message);
+          toast.success(`${name} is now admin`);
           refetch();
         } else {
           toast.error(data.message);
