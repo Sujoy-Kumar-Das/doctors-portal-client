@@ -11,6 +11,7 @@ import AppoinmentDashBoard from "../pages/AppoinmentDasboard.js/AppoinmentDashBo
 import AllUsers from "../pages/Alluser/AllUsers";
 import AdminRoute from "./AdminRoute";
 import AddDoctor from "../pages/addDoctor/AddDoctor";
+import AllDoctors from "../pages/doctors/AllDoctors";
 
 
 export const router = createBrowserRouter([
@@ -41,7 +42,12 @@ export const router = createBrowserRouter([
             {
                 path:"/dashboardLayout/add-doctor",
                 element:<AdminRoute><AddDoctor></AddDoctor></AdminRoute>
-            }
+            },
+            {
+                path:"/dashboardLayout/store-doctors",
+                element:<AdminRoute><AllDoctors></AllDoctors></AdminRoute>
+            },
+           
         ]
     }
 ])

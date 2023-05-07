@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { AuthProvider } from "../../contexts/authContext/AuthContextProvider";
 
 const AddDoctor = () => {
+    const {user} = useContext(AuthProvider)
   const {
     register,
     formState: { errors },
@@ -18,9 +21,47 @@ const AddDoctor = () => {
       }
     },
   });
+  const imageAPIkey = process.env.REACT_APP_ImageAPIKey;
   const specialtys = data.specialty;
+
   const handleAddDoctor = (data) => {
-    console.log(data);
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${imageAPIkey}`, {
+      method: "POST",
+      body: formData,
+    })
+    .then(res=>res.json())
+    .then(Imagedata=>{
+        if(Imagedata.success){
+            const imageUrl = Imagedata.data.url
+            const doctorsInfo = {
+                name:data.name,
+                email:data.email,
+                image:imageUrl,
+                specialty:data.specialty
+            }
+            fetch(`http://localhost:5000/store-doctors?email=${user.email}&&doctorName=${data.name}`,{
+                method:"POST",
+                headers:{
+                    "content-type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("Acess_Token")}`,
+                },
+                body:JSON.stringify(doctorsInfo)
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                
+                if(data.success){
+                    toast.success(data.message)
+                }
+                else{
+                    toast.error(data.message)
+                }
+            })
+        }
+    })
   };
   return (
     <div className=" w-80 mx-auto lg:w-96 lg:mx-0 ">
