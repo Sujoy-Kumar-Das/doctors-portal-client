@@ -9,6 +9,7 @@ import DashBoardLayout from "../Layouts/DashBoardLayout";
 import PrivetRouer from "./PrivetRouer";
 import AppoinmentDashBoard from "../pages/AppoinmentDasboard.js/AppoinmentDashBoard";
 import AllUsers from "../pages/Alluser/AllUsers";
+import AdminRoute from "./AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:"/dashboardLayout/allusers",
-                element:<AllUsers></AllUsers>
+                element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
             }
         ]
     }
